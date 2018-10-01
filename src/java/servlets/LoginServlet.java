@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             }
         } 
     
-        if(session.getAttribute("username") != null){
+        if(!(session.getAttribute("username") == null)){
             response.sendRedirect("home");
         }else{
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -83,6 +83,16 @@ public class LoginServlet extends HttpServlet {
                 Cookie c = new Cookie("user", username);
                 c.setMaxAge(24*60*60);
                 response.addCookie(c);
+            }else{
+                Cookie[] cookies = request.getCookies();
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("user"))
+                    {
+                        c.setMaxAge(0);
+                        session.setAttribute("rememberMe","unchecked");
+                    }
+                } 
+                
             }
             response.sendRedirect("home");
         }

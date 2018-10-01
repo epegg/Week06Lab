@@ -25,7 +25,6 @@ public class HomeServlet extends HttpServlet {
     
         HttpSession session = request.getSession();  
             if(request.getParameter("logout")!=null){
-                
                 session.setAttribute("username",null);
                 request.getSession().invalidate();
                 response.sendRedirect("login");
